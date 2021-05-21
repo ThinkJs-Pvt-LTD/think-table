@@ -1,0 +1,45 @@
+.container {
+    border: 1px solid white;
+    position: relative;
+    margin-top: 10%;
+    left: 10%;
+    width: 80%;
+    padding: 20px;
+    /* justify-content: center; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-search {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  th {
+    /* text-align: left; */
+    background-color: rgb(213, 227, 240);
+    color: black;
+    cursor: pointer;
+  }
+  td,
+  th {
+    /* border: 1px solid #999; */
+    padding: 0.5rem;
+  }
+  table.invoice-data {
+    width: 100%;
+    position: relative;
+    table-layout: "fixed";
+    border-collapse: collapse;
+    word-wrap: break-word;
+  }
+  th, td {
+      border-bottom: 1px solid #ddd;
+    }
+  .table-head-width{
+      width: 104%;
+  }
