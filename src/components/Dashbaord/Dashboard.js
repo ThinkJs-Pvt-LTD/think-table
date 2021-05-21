@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { tableData } from "../../JsonData";
+import Search from "../../commons/Search/Search";
+import ToggleButton from "../../commons/ToggleButton/ToggleButton"
 import "./Dashboard.css"
 
 function Dashboard(props) {
@@ -101,12 +103,29 @@ function Dashboard(props) {
             }
         }
       };
+      const handleChange = (newVal) => {
+        // console.log(newVal);
+        let filteredData = tableData.filter((data) => {
+          return data.id === newVal;
+        });
+        setInvoices(filteredData);
+      };
+
+      //Component
+      const NavBar = () => {
+        return (
+          <div className="nav-search">
+              <Search onChange={handleChange}/>
+              <ToggleButton/>
+          </div>
+        );
+      };
 
     return (
         <div className="container">
       <header className="site-header">
         <h3>Invoices</h3>
-        {/* <NavBar /> */}
+        <NavBar />
       </header>
       <table className="invoice-data">
         <tr styles={{ width: "50px" }}>

@@ -1,0 +1,21 @@
+.toggle-button{
+    border: 1px solid black;
+    width: 47%;
+    height: 2em;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.button-width{
+    position: relative;
+    top: 10%;
+    font-weight: 500;
+    letter-spacing: 4px;
+    /* width: 39%; */
+    height: 2em;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
