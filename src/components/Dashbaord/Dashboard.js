@@ -12,8 +12,95 @@ function Dashboard(props) {
         "Status",
         " ",
       ];
+      //Local State
+      const [invoices, setInvoices] = useState(tableData);
+      const [toggle, setToggle] = useState(false)
 
-      const [invoices, setInvoices] = useState(tableData)
+      //Functions
+      const sortColumnFun = (i) => {
+        setToggle(!toggle);
+        console.log(toggle);
+        let arrToBeSorted = [];
+        switch (i) {
+          case "ID":
+            invoices?.map((invoiceData) => {
+              return arrToBeSorted.push(invoiceData.id);
+            });
+            if (toggle === true) {
+              invoices.sort(function (a, b) {
+                if (a.id === b.id) {
+                  return 0;
+                }
+                if (typeof a.id === typeof b.id) {
+                  return a.id < b.id ? 1 : -1;
+                }
+                return typeof a.id < typeof b.id ? 1 : -1;
+              });
+            } else if (toggle === false) {
+              arrToBeSorted.sort(function (a, b) {
+                if (a.id === b.id) {
+                  return 0;
+                }
+                if (typeof a.id === typeof b.id) {
+                  return a.id < b.id ? -1 : 1;
+                }
+                return typeof a.id < typeof b.id ? -1 : 1;
+              });
+            }
+            break;
+          case "Amount":
+            invoices.map((invoiceData) => {
+              return arrToBeSorted.push(invoiceData.invoiceAmount);
+            });
+            if (toggle === true) {
+              invoices.sort(function (a, b) {
+                if (a.invoiceAmount === b.invoiceAmount) {
+                  return 0;
+                }
+                if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
+                  return a.invoiceAmount < b.invoiceAmount ? 1 : -1;
+                }
+                return typeof a.invoiceAmount < typeof b.invoiceAmount ? 1 : -1;
+              });
+            } else if (toggle === false) {
+              arrToBeSorted.sort(function (a, b) {
+                if (a.invoiceAmount === b.invoiceAmount) {
+                  return 0;
+                }
+                if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
+                  return a.invoiceAmount < b.invoiceAmount ? -1 : 1;
+                }
+                return typeof a.invoiceAmount < typeof b.invoiceAmount ? -1 : 1;
+              });
+            }
+            break;
+            case "Credits Used":
+            invoices.map((invoiceData) => {
+              return arrToBeSorted.push(invoiceData.creditsUsed);
+            });
+            if (toggle === true) {
+              invoices.sort(function (a, b) {
+                if (a.creditsUsed === b.creditsUsed) {
+                  return 0;
+                }
+                if (typeof a.creditsUsed === typeof b.creditsUsed) {
+                  return a.creditsUsed < b.creditsUsed ? 1 : -1;
+                }
+                return typeof a.creditsUsed < typeof b.creditsUsed ? 1 : -1;
+              });
+            } else if (toggle === false) {
+              arrToBeSorted.sort(function (a, b) {
+                if (a.creditsUsed === b.creditsUsed) {
+                  return 0;
+                }
+                if (typeof a.creditsUsed === typeof b.creditsUsed) {
+                  return a.creditsUsed < b.creditsUsed ? -1 : 1;
+                }
+                return typeof a.creditsUsed < typeof b.creditsUsed ? -1 : 1;
+              });
+            }
+        }
+      };
 
     return (
         <div className="container">
@@ -24,7 +111,7 @@ function Dashboard(props) {
       <table className="invoice-data">
         <tr styles={{ width: "50px" }}>
           {tableHeaders.map((i) => {
-            return <th > {i}</th>;//onClick={() => sortColumnFun(i)}
+            return <th onClick={() => sortColumnFun(i)}> {i}</th>;
           })}
         </tr>
         {invoices.map((user, i) => {
