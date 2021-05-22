@@ -1,12 +1,15 @@
 .container {
   border: 1px solid white;
   position: relative;
-  margin-top: 10%;
   left: 10%;
   width: 80%;
   padding: 20px;
   /* justify-content: center; */
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.heading{
+  text-align: center;
+  margin: 1rem  0;
 }
 .site-header {
   display: flex;
