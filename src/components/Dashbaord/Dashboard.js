@@ -37,6 +37,9 @@ function Dashboard(props) {
   const [activePage, setActivePage] = useState(0);
   const [activeSort, setActiveSort] = useState(null);
 
+  useEffect(() =>{
+    setActiveSort(null);
+  },[paginationActive]);
   useEffect(() => {
     //pagination handler
     if (paginationActive) {
@@ -168,7 +171,7 @@ function Dashboard(props) {
                 </label>
               </form>
               <div className="footer-buttons">
-                <button className="cancle-button">Cancel</button>
+                <button onClick={()=>{setIsOpen(!isOpen)}} className="cancle-button">Cancel</button>
                 <button className="updateButton">Update Details</button>
               </div>
             </div>
