@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { tableData } from "../../JsonData";
 import Search from "../../commons/Search/Search";
 import ToggleButton from "../../commons/ToggleButton/ToggleButton";
 import Popup from "../../commons/PopUp/PopUp";
 import "./Dashboard.css";
 import { partialStringMatch } from "../../utils/partialStringMatch";
-
+import Pagination from '../Pagination';
+const pageSize = 5;
 function Dashboard(props) {
   const tableHeaders = [
     "ID",
@@ -16,19 +17,23 @@ function Dashboard(props) {
     " ",
   ];
   //Local State
-  const [invoices, setInvoices] = useState(tableData);
+  const [invoices, setInvoices] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
-  console.log(
-    "🚀 ~ file: Dashboard.js ~ line 22 ~ Dashboard ~ selectedArr",
-    selectedArr
-  );
+  const [activePage, setActivePage] = useState(0);
+
+  useEffect(()=>{
+    //pagination handler
+    const startIdx = activePage * pageSize;
+    const endIdx = pageSize * activePage + pageSize;
+    const filteredData =  tableData && tableData.length !== 0 && tableData.slice(startIdx,endIdx);
+    setInvoices(filteredData);
+  },[activePage]);
 
   //Functions
   const sortColumnFun = (i) => {
     setToggle(!toggle);
-    console.log(toggle);
     let arrToBeSorted = [];
     switch (i) {
       case "ID":
@@ -136,6 +141,10 @@ function Dashboard(props) {
     );
   };
 
+  const goToPage = (pageIdx) => {
+    setActivePage(pageIdx);
+  }
+  const pageCount = tableData && tableData.length / pageSize;
   return (
     <div className="container">
       <div className='heading'>
@@ -157,11 +166,8 @@ function Dashboard(props) {
         {invoices && invoices.length !==0 && invoices.map((user, i) => {
           return (
             <tbody key={i}>
-              <tr className="border-bottom">
-                <td
-                  onClick={() => togglePopup(i)}
-                  style={{ cursor: "pointer" }}
-                >
+              <tr onClick={() => togglePopup(i)} style={{cursor: 'pointer'}}>
+                <td>
                   <span className="text">{user.id ? user.id : "-"}</span>
                 </td>
                 <td>{user.invoiceAmount ? user.invoiceAmount : "-"}</td>
@@ -221,6 +227,9 @@ function Dashboard(props) {
           handleClose={togglePopup}
         />
       )}
+      <div className='table-footer'>
+        {toggle ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : console.log("infinite")}
+      </div>
     </div>
   );
 }
