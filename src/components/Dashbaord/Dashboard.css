@@ -43,3 +43,11 @@
   .table-head-width{
       width: 104%;
   }
+  .text:hover{
+    text-decoration: underline rgb(30,144,255);
+    color: rgb(30,144,255);
+  }
+  .pop-up-block{
+    display: flex;
+    flex-direction: column;
+  }

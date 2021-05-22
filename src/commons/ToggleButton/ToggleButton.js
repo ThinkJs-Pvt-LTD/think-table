@@ -3,7 +3,7 @@ import "./ToggleButton.css";
 
 function SwitchButton(props) {
     //State
-  const [limited, setLimited] = useState(false);
+  const [limited, setLimited] = useState(true);
 
   //Function
   const limitedTable =() => {
