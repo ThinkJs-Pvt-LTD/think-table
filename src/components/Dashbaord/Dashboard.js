@@ -110,11 +110,19 @@ function Dashboard(props) {
     }
   };
   const handleChange = (newVal) => {
-    // console.log(newVal);
-    let filteredData = tableData.filter((data) => {
-      return data.id === newVal;
-    });
-    setInvoices(filteredData);
+    console.log(newVal);
+    if(invoices.findIndex(value => value.id === newVal || value.invoiceAmount === newVal) >= 0 ){
+      let res = invoices.filter((i) => {
+        return i.id === newVal || i.invoiceAmount === newVal
+      })
+      setInvoices(res)
+      console.log("🚀 ~ file: Dashboard.js ~ line 118 ~ res ~ res", res)
+    } else {
+      setInvoices(tableData)
+    }
+    // invoices.filter((data) => {
+    //   console.log(invoices.findIndex(value => value.id === newVal))
+    // })
   };
   const togglePopup = (index) => {
     setSelectedArr(invoices[index]);
@@ -134,7 +142,7 @@ function Dashboard(props) {
     return (
       <div className="pop-up-block">
         <span className="style-text">{tableHead}</span>
-        <input value={tableValue} className="style-text-input"/>
+        <input value={tableValue} className="style-text-input" />
       </div>
     );
   };
