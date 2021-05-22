@@ -1,45 +1,97 @@
 .container {
-    border: 1px solid white;
-    position: relative;
-    margin-top: 10%;
-    left: 10%;
-    width: 80%;
-    padding: 20px;
-    /* justify-content: center; */
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  }
-  .site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .nav-search {
-    display: flex;
-    width: 40%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  th {
-    /* text-align: left; */
-    background-color: rgb(227, 239, 252);
-    color: black;
-    cursor: pointer;
-  }
-  td,
-  th {
-    /* border: 1px solid #999; */
-    padding: 0.5rem;
-  }
-  table.invoice-data {
-    width: 100%;
-    position: relative;
-    table-layout: "fixed";
-    border-collapse: collapse;
-    word-wrap: break-word;
-  }
-  th, td {
-      border-bottom: 1px solid #ddd;
-    }
-  .table-head-width{
-      width: 104%;
-  }
+  border: 1px solid white;
+  position: relative;
+  margin-top: 10%;
+  left: 10%;
+  width: 80%;
+  padding: 20px;
+  /* justify-content: center; */
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-search {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  align-items: center;
+}
+th {
+  /* text-align: left; */
+  background-color: rgb(227, 239, 252);
+  color: black;
+  cursor: pointer;
+}
+td,
+th {
+  /* border: 1px solid #999; */
+  padding: 0.5rem;
+}
+table.invoice-data {
+  width: 100%;
+  position: relative;
+  table-layout: "fixed";
+  border-collapse: collapse;
+  word-wrap: break-word;
+}
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+.table-head-width {
+  width: 104%;
+}
+.text:hover {
+  text-decoration: underline rgb(30, 144, 255);
+  color: rgb(30, 144, 255);
+}
+.pop-up-block {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  height: 100px;
+  justify-content: space-around;
+}
+.style-text {
+  font-weight: 540;
+  font-size: 1.1rem;
+  font-family: Tahoma;
+  justify-content: space-around;
+}
+.style-text-input {
+  padding: 7px;
+  border: 2px solid rgb(219, 234, 250);
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-family: Tahoma;
+  position: relative;
+  background-color: rgb(227, 239, 252);
+}
+.footer-buttons {
+  position: relative;
+  left: 61.1%;
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+}
+.updateButton {
+  background-color: rgb(2, 166, 255);
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  position: relative;
+  border: none;
+  cursor: pointer;
+}
+.cancle-button {
+  padding: 7px;
+  background-color: white;
+  font-size: 22px;
+  font-weight: 800;
+  border: 2px solid rgb(219, 234, 250);
+  cursor: pointer;
+}

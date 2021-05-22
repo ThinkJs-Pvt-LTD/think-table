@@ -19,8 +19,7 @@ function SearchBar(props) {
           value={keyword}
         ></input>
         <button type="submit" class="searchButton">
-          {/* <i class="fa fa-search"></i> */}
-          o
+          <i class="fa fa-search"></i>
         </button>
       </div>
     </div>
