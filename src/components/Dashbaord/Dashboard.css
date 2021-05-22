@@ -102,3 +102,18 @@ td {
 .table-footer{
   margin-top: 1rem;
 }
+
+.recipt-btn{
+  background: #fff;
+  border: none;
+  box-shadow: 0 0 2px 0 grey;
+  padding: 0.25rem 0.5rem;
+}
+
+.sort-asc{
+  border-bottom: 2px solid pink;
+}
+
+.sort-desc{
+  border-top: 2px solid pink;
+}

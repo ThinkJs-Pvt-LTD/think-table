@@ -6,22 +6,36 @@ import Popup from "../../commons/PopUp/PopUp";
 import "./Dashboard.css";
 import { partialStringMatch } from "../../utils/partialStringMatch";
 import Pagination from '../Pagination';
+import { sortByKey } from "../../utils/sortByKey";
 const pageSize = 5;
+
+const tableHeaders = [{
+  dataIndex: 'id',
+  label: 'ID'
+}, {
+  dataIndex: 'invoiceAmount',
+  label: 'Amount'
+}, {
+  dataIndex: 'billingPeriod',
+  label: 'Time Period'
+}, {
+  dataIndex: 'creditsUsed',
+  label: 'Credits Used'
+}, {
+  dataIndex: 'invoicePaymentStatus',
+  label: 'Status'
+}, {
+  dataIndex: '',
+  label: ''
+}];
 function Dashboard(props) {
-  const tableHeaders = [
-    "ID",
-    "Amount",
-    "Time Period",
-    "Credits Used",
-    "Status",
-    " ",
-  ];
   //Local State
   const [invoices, setInvoices] = useState([]);
   const [paginationActive, setPaginationActive] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
   const [activePage, setActivePage] = useState(0);
+  const [activeSort, setActiveSort] = useState(null);
 
   useEffect(() => {
     //pagination handler
@@ -34,88 +48,14 @@ function Dashboard(props) {
   }, [activePage, paginationActive]);
 
   //Functions
-  const sortColumnFun = (i) => {
-    // setToggle(!toggle);
-    // let arrToBeSorted = [];
-    // switch (i) {
-    //   case "ID":
-    //     invoices?.map((invoiceData) => {
-    //       return arrToBeSorted.push(invoiceData.id);
-    //     });
-    //     if (toggle === true) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.id === b.id) {
-    //           return 0;
-    //         }
-    //         if (typeof a.id === typeof b.id) {
-    //           return a.id < b.id ? 1 : -1;
-    //         }
-    //         return typeof a.id < typeof b.id ? 1 : -1;
-    //       });
-    //     } else if (toggle === false) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.id === b.id) {
-    //           return 0;
-    //         }
-    //         if (typeof a.id === typeof b.id) {
-    //           return a.id < b.id ? -1 : 1;
-    //         }
-    //         return typeof a.id < typeof b.id ? -1 : 1;
-    //       });
-    //     }
-    //     break;
-    //   case "Amount":
-    //     invoices.map((invoiceData) => {
-    //       return arrToBeSorted.push(invoiceData.invoiceAmount);
-    //     });
-    //     if (toggle === true) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.invoiceAmount === b.invoiceAmount) {
-    //           return 0;
-    //         }
-    //         if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
-    //           return a.invoiceAmount < b.invoiceAmount ? 1 : -1;
-    //         }
-    //         return typeof a.invoiceAmount < typeof b.invoiceAmount ? 1 : -1;
-    //       });
-    //     } else if (toggle === false) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.invoiceAmount === b.invoiceAmount) {
-    //           return 0;
-    //         }
-    //         if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
-    //           return a.invoiceAmount < b.invoiceAmount ? -1 : 1;
-    //         }
-    //         return typeof a.invoiceAmount < typeof b.invoiceAmount ? -1 : 1;
-    //       });
-    //     }
-    //     break;
-    //   case "Credits Used":
-    //     invoices.map((invoiceData) => {
-    //       return arrToBeSorted.push(invoiceData.creditsUsed);
-    //     });
-    //     if (toggle === true) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.creditsUsed === b.creditsUsed) {
-    //           return 0;
-    //         }
-    //         if (typeof a.creditsUsed === typeof b.creditsUsed) {
-    //           return a.creditsUsed < b.creditsUsed ? 1 : -1;
-    //         }
-    //         return typeof a.creditsUsed < typeof b.creditsUsed ? 1 : -1;
-    //       });
-    //     } else if (toggle === false) {
-    //       invoices.sort(function (a, b) {
-    //         if (a.creditsUsed === b.creditsUsed) {
-    //           return 0;
-    //         }
-    //         if (typeof a.creditsUsed === typeof b.creditsUsed) {
-    //           return a.creditsUsed < b.creditsUsed ? -1 : 1;
-    //         }
-    //         return typeof a.creditsUsed < typeof b.creditsUsed ? -1 : 1;
-    //       });
-    //     }
-    // }
+  const sortColumnFun = (key) => {
+    if (key !== '') {
+      const sortAsc = activeSort && activeSort.key === key && activeSort.asc; 
+      const sortedData = sortByKey([...invoices], key);
+      const finalData = sortAsc ? sortedData : sortedData.reverse();
+      setActiveSort({key: key,asc: !sortAsc});
+      setInvoices(finalData);
+    }
   };
 
   const handleChange = (newVal) => {
@@ -166,8 +106,10 @@ function Dashboard(props) {
       </header>
       <table className="invoice-data">
         <tr styles={{ width: "50px" }}>
-          {tableHeaders.map((i) => {
-            return <th onClick={() => sortColumnFun(i)}> {i}</th>;
+          {tableHeaders.map((header) => {
+            const sortAscCls = activeSort?.key === header.dataIndex && !activeSort?.asc ? 'sort-asc' : '';
+            const sortDescCls = activeSort?.key === header.dataIndex && activeSort?.asc ? 'sort-desc' : '';
+            return <th className={`${sortAscCls} ${sortDescCls}`} onClick={() => sortColumnFun(header.dataIndex)}> {header.label}</th>;
           })}
         </tr>
         {invoices && invoices.length !== 0 && invoices.map((user, i) => {
@@ -184,7 +126,7 @@ function Dashboard(props) {
                   {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
                 </td>
                 <td>
-                  <button>Recipt</button>
+                  <button className="recipt-btn">Recipt</button>
                 </td>
               </tr>
             </tbody>
@@ -235,7 +177,7 @@ function Dashboard(props) {
         />
       )}
       <div className='table-footer'>
-        {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : console.log("infinite")}
+        {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
       </div>
     </div>
   );
