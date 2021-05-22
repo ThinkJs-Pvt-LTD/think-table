@@ -138,6 +138,9 @@ function Dashboard(props) {
 
   return (
     <div className="container">
+      <div className='heading'>
+        <h2>Think Table</h2>
+      </div>
       <header className="site-header">
         <h3 className="style-text">Invoices</h3>
         <div className="nav-search">
