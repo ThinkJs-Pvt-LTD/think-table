@@ -4,6 +4,7 @@ import Search from "../../commons/Search/Search";
 import ToggleButton from "../../commons/ToggleButton/ToggleButton";
 import Popup from "../../commons/PopUp/PopUp";
 import "./Dashboard.css";
+import Pageinition from "../Pageinition/Pageinition";
 
 function Dashboard(props) {
   const tableHeaders = [
@@ -17,12 +18,9 @@ function Dashboard(props) {
   //Local State
   const [invoices, setInvoices] = useState(tableData);
   const [toggle, setToggle] = useState(true);
+  console.log("🚀 ~ file: Dashboard.js ~ line 21 ~ Dashboard ~ toggle", toggle)
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
-  console.log(
-    "🚀 ~ file: Dashboard.js ~ line 22 ~ Dashboard ~ selectedArr",
-    selectedArr
-  );
 
   //Functions
   const sortColumnFun = (i) => {
@@ -111,14 +109,18 @@ function Dashboard(props) {
   };
   const handleChange = (newVal) => {
     console.log(newVal);
-    if(invoices.findIndex(value => value.id === newVal || value.invoiceAmount === newVal) >= 0 ){
+    if (
+      invoices.findIndex(
+        (value) => value.id === newVal || value.invoiceAmount === newVal
+      ) >= 0
+    ) {
       let res = invoices.filter((i) => {
-        return i.id === newVal || i.invoiceAmount === newVal
-      })
-      setInvoices(res)
-      console.log("🚀 ~ file: Dashboard.js ~ line 118 ~ res ~ res", res)
+        return i.id === newVal || i.invoiceAmount === newVal;
+      });
+      setInvoices(res);
+      console.log("🚀 ~ file: Dashboard.js ~ line 118 ~ res ~ res", res);
     } else {
-      setInvoices(tableData)
+      setInvoices(tableData);
     }
     // invoices.filter((data) => {
     //   console.log(invoices.findIndex(value => value.id === newVal))
@@ -226,6 +228,7 @@ function Dashboard(props) {
           handleClose={togglePopup}
         />
       )}
+      <div>{toggle ? <Pageinition /> : console.log("infinite")}</div>
     </div>
   );
 }

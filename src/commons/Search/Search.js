@@ -4,6 +4,7 @@ import "./Search.css"
 function SearchBar(props) {
   const [keyword, setKeyword] = useState("");
   const handleInpurChange = (e) => {
+    // console.log(e.target.value);
     setKeyword(e.target.value)
     props.onChange(e.target.value)
   }
