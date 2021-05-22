@@ -18,102 +18,104 @@ function Dashboard(props) {
   ];
   //Local State
   const [invoices, setInvoices] = useState([]);
-  const [toggle, setToggle] = useState(true);
+  const [paginationActive, setPaginationActive] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
   const [activePage, setActivePage] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     //pagination handler
-    const startIdx = activePage * pageSize;
-    const endIdx = pageSize * activePage + pageSize;
-    const filteredData =  tableData && tableData.length !== 0 && tableData.slice(startIdx,endIdx);
-    setInvoices(filteredData);
-  },[activePage]);
+    if (paginationActive) {
+      const startIdx = activePage * pageSize;
+      const endIdx = pageSize * activePage + pageSize;
+      const filteredData = tableData && tableData.length !== 0 && tableData.slice(startIdx, endIdx);
+      setInvoices(filteredData);
+    }
+  }, [activePage, paginationActive]);
 
   //Functions
   const sortColumnFun = (i) => {
-    setToggle(!toggle);
-    let arrToBeSorted = [];
-    switch (i) {
-      case "ID":
-        invoices?.map((invoiceData) => {
-          return arrToBeSorted.push(invoiceData.id);
-        });
-        if (toggle === true) {
-          invoices.sort(function (a, b) {
-            if (a.id === b.id) {
-              return 0;
-            }
-            if (typeof a.id === typeof b.id) {
-              return a.id < b.id ? 1 : -1;
-            }
-            return typeof a.id < typeof b.id ? 1 : -1;
-          });
-        } else if (toggle === false) {
-          invoices.sort(function (a, b) {
-            if (a.id === b.id) {
-              return 0;
-            }
-            if (typeof a.id === typeof b.id) {
-              return a.id < b.id ? -1 : 1;
-            }
-            return typeof a.id < typeof b.id ? -1 : 1;
-          });
-        }
-        break;
-      case "Amount":
-        invoices.map((invoiceData) => {
-          return arrToBeSorted.push(invoiceData.invoiceAmount);
-        });
-        if (toggle === true) {
-          invoices.sort(function (a, b) {
-            if (a.invoiceAmount === b.invoiceAmount) {
-              return 0;
-            }
-            if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
-              return a.invoiceAmount < b.invoiceAmount ? 1 : -1;
-            }
-            return typeof a.invoiceAmount < typeof b.invoiceAmount ? 1 : -1;
-          });
-        } else if (toggle === false) {
-          invoices.sort(function (a, b) {
-            if (a.invoiceAmount === b.invoiceAmount) {
-              return 0;
-            }
-            if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
-              return a.invoiceAmount < b.invoiceAmount ? -1 : 1;
-            }
-            return typeof a.invoiceAmount < typeof b.invoiceAmount ? -1 : 1;
-          });
-        }
-        break;
-      case "Credits Used":
-        invoices.map((invoiceData) => {
-          return arrToBeSorted.push(invoiceData.creditsUsed);
-        });
-        if (toggle === true) {
-          invoices.sort(function (a, b) {
-            if (a.creditsUsed === b.creditsUsed) {
-              return 0;
-            }
-            if (typeof a.creditsUsed === typeof b.creditsUsed) {
-              return a.creditsUsed < b.creditsUsed ? 1 : -1;
-            }
-            return typeof a.creditsUsed < typeof b.creditsUsed ? 1 : -1;
-          });
-        } else if (toggle === false) {
-          invoices.sort(function (a, b) {
-            if (a.creditsUsed === b.creditsUsed) {
-              return 0;
-            }
-            if (typeof a.creditsUsed === typeof b.creditsUsed) {
-              return a.creditsUsed < b.creditsUsed ? -1 : 1;
-            }
-            return typeof a.creditsUsed < typeof b.creditsUsed ? -1 : 1;
-          });
-        }
-    }
+    // setToggle(!toggle);
+    // let arrToBeSorted = [];
+    // switch (i) {
+    //   case "ID":
+    //     invoices?.map((invoiceData) => {
+    //       return arrToBeSorted.push(invoiceData.id);
+    //     });
+    //     if (toggle === true) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.id === b.id) {
+    //           return 0;
+    //         }
+    //         if (typeof a.id === typeof b.id) {
+    //           return a.id < b.id ? 1 : -1;
+    //         }
+    //         return typeof a.id < typeof b.id ? 1 : -1;
+    //       });
+    //     } else if (toggle === false) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.id === b.id) {
+    //           return 0;
+    //         }
+    //         if (typeof a.id === typeof b.id) {
+    //           return a.id < b.id ? -1 : 1;
+    //         }
+    //         return typeof a.id < typeof b.id ? -1 : 1;
+    //       });
+    //     }
+    //     break;
+    //   case "Amount":
+    //     invoices.map((invoiceData) => {
+    //       return arrToBeSorted.push(invoiceData.invoiceAmount);
+    //     });
+    //     if (toggle === true) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.invoiceAmount === b.invoiceAmount) {
+    //           return 0;
+    //         }
+    //         if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
+    //           return a.invoiceAmount < b.invoiceAmount ? 1 : -1;
+    //         }
+    //         return typeof a.invoiceAmount < typeof b.invoiceAmount ? 1 : -1;
+    //       });
+    //     } else if (toggle === false) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.invoiceAmount === b.invoiceAmount) {
+    //           return 0;
+    //         }
+    //         if (typeof a.invoiceAmount === typeof b.invoiceAmount) {
+    //           return a.invoiceAmount < b.invoiceAmount ? -1 : 1;
+    //         }
+    //         return typeof a.invoiceAmount < typeof b.invoiceAmount ? -1 : 1;
+    //       });
+    //     }
+    //     break;
+    //   case "Credits Used":
+    //     invoices.map((invoiceData) => {
+    //       return arrToBeSorted.push(invoiceData.creditsUsed);
+    //     });
+    //     if (toggle === true) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.creditsUsed === b.creditsUsed) {
+    //           return 0;
+    //         }
+    //         if (typeof a.creditsUsed === typeof b.creditsUsed) {
+    //           return a.creditsUsed < b.creditsUsed ? 1 : -1;
+    //         }
+    //         return typeof a.creditsUsed < typeof b.creditsUsed ? 1 : -1;
+    //       });
+    //     } else if (toggle === false) {
+    //       invoices.sort(function (a, b) {
+    //         if (a.creditsUsed === b.creditsUsed) {
+    //           return 0;
+    //         }
+    //         if (typeof a.creditsUsed === typeof b.creditsUsed) {
+    //           return a.creditsUsed < b.creditsUsed ? -1 : 1;
+    //         }
+    //         return typeof a.creditsUsed < typeof b.creditsUsed ? -1 : 1;
+    //       });
+    //     }
+    // }
   };
 
   const handleChange = (newVal) => {
@@ -145,6 +147,11 @@ function Dashboard(props) {
     setActivePage(pageIdx);
   }
   const pageCount = tableData && tableData.length / pageSize;
+
+  const handleToggleView = () => {
+    setPaginationActive(!paginationActive);
+    setInvoices(tableData);
+  }
   return (
     <div className="container">
       <div className='heading'>
@@ -154,7 +161,7 @@ function Dashboard(props) {
         <h3 className="style-text">Invoices</h3>
         <div className="nav-search">
           <Search onChange={handleChange} />
-          <ToggleButton />
+          <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
         </div>
       </header>
       <table className="invoice-data">
@@ -163,10 +170,10 @@ function Dashboard(props) {
             return <th onClick={() => sortColumnFun(i)}> {i}</th>;
           })}
         </tr>
-        {invoices && invoices.length !==0 && invoices.map((user, i) => {
+        {invoices && invoices.length !== 0 && invoices.map((user, i) => {
           return (
             <tbody key={i}>
-              <tr onClick={() => togglePopup(i)} style={{cursor: 'pointer'}}>
+              <tr onClick={() => togglePopup(i)} style={{ cursor: 'pointer' }}>
                 <td>
                   <span className="text">{user.id ? user.id : "-"}</span>
                 </td>
@@ -228,7 +235,7 @@ function Dashboard(props) {
         />
       )}
       <div className='table-footer'>
-        {toggle ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : console.log("infinite")}
+        {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : console.log("infinite")}
       </div>
     </div>
   );
