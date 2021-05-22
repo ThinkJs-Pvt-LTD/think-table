@@ -1,0 +1,27 @@
+.pagination {
+  display: inline-block;
+}
+
+.pagination span {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination span.active {
+  background-color: #0383ff;
+  color: white;
+}
+.pagination span:hover:not(.active) {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.pagination .go-to-button{
+  background: #0383ff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

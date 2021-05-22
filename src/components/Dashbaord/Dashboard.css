@@ -98,3 +98,7 @@ td {
   border: 2px solid rgb(219, 234, 250);
   cursor: pointer;
 }
+
+.table-footer{
+  margin-top: 1rem;
+}
