@@ -4,6 +4,7 @@ import Search from "../../commons/Search/Search";
 import ToggleButton from "../../commons/ToggleButton/ToggleButton";
 import Popup from "../../commons/PopUp/PopUp";
 import "./Dashboard.css";
+import { partialStringMatch } from "../../utils/partialStringMatch";
 
 function Dashboard(props) {
   const tableHeaders = [
@@ -109,35 +110,23 @@ function Dashboard(props) {
         }
     }
   };
+
   const handleChange = (newVal) => {
-    console.log(newVal);
-    if(invoices.findIndex(value => value.id === newVal || value.invoiceAmount === newVal) >= 0 ){
-      let res = invoices.filter((i) => {
-        return i.id === newVal || i.invoiceAmount === newVal
-      })
-      setInvoices(res)
-      console.log("🚀 ~ file: Dashboard.js ~ line 118 ~ res ~ res", res)
-    } else {
-      setInvoices(tableData)
+    if (newVal === '') {
+      setInvoices(tableData);
+      return;
     }
-    // invoices.filter((data) => {
-    //   console.log(invoices.findIndex(value => value.id === newVal))
-    // })
+    const filteredData = tableData?.filter((_item) => {
+      const { id, invoiceAmount, billingPeriod, creditsUsed, creditsLimit, invoicePaymentStatus } = _item;
+      return partialStringMatch(id, newVal) || partialStringMatch(invoiceAmount, newVal) || partialStringMatch(billingPeriod, newVal) || partialStringMatch(creditsUsed, newVal) || partialStringMatch(creditsLimit, newVal) || partialStringMatch(invoicePaymentStatus, newVal)
+    });
+    setInvoices(filteredData);
   };
   const togglePopup = (index) => {
     setSelectedArr(invoices[index]);
     setIsOpen(!isOpen);
   };
 
-  //Component
-  const NavBar = () => {
-    return (
-      <div className="nav-search">
-        <Search onChange={handleChange} />
-        <ToggleButton />
-      </div>
-    );
-  };
   const PopUpData = (tableHead, tableValue) => {
     return (
       <div className="pop-up-block">
@@ -151,7 +140,10 @@ function Dashboard(props) {
     <div className="container">
       <header className="site-header">
         <h3 className="style-text">Invoices</h3>
-        <NavBar />
+        <div className="nav-search">
+          <Search onChange={handleChange} />
+          <ToggleButton />
+        </div>
       </header>
       <table className="invoice-data">
         <tr styles={{ width: "50px" }}>
@@ -159,7 +151,7 @@ function Dashboard(props) {
             return <th onClick={() => sortColumnFun(i)}> {i}</th>;
           })}
         </tr>
-        {invoices.map((user, i) => {
+        {invoices && invoices.length !==0 && invoices.map((user, i) => {
           return (
             <tbody key={i}>
               <tr className="border-bottom">
@@ -181,7 +173,7 @@ function Dashboard(props) {
               </tr>
             </tbody>
           );
-        })}
+        }) || 'No rows found!!!'}
       </table>
       {isOpen && (
         <Popup

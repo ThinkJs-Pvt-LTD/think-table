@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Search.css"
 
-function SearchBar(props) {
+function SearchBar({onChange}) {
   const [keyword, setKeyword] = useState("");
-  const handleInpurChange = (e) => {
-    setKeyword(e.target.value)
-    props.onChange(e.target.value)
+  const handleInputChange = (key) => {
+    setKeyword(key);
+    onChange(key);
   }
   return (
     <div class="wrap">
@@ -15,9 +15,9 @@ function SearchBar(props) {
           class="searchTerm"
           id="input_text"
           placeholder="Search"
-          onChange={(e) => handleInpurChange(e)}
+          onChange={(e) => handleInputChange(e.target.value)}
           value={keyword}
-        ></input>
+        />
         <button type="submit" class="searchButton">
           <i class="fa fa-search"></i>
         </button>
