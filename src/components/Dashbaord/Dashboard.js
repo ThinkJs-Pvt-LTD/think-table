@@ -7,33 +7,16 @@ import "./Dashboard.css";
 import { partialStringMatch } from "../../utils/partialStringMatch";
 import Pagination from '../Pagination';
 import { sortByKey } from "../../utils/sortByKey";
+import DataTable from "../DataTable";
+import InvoiceModal from "../InvoiceModal";
 const pageSize = 5;
 
-const tableHeaders = [{
-  dataIndex: 'id',
-  label: 'ID'
-}, {
-  dataIndex: 'invoiceAmount',
-  label: 'Amount'
-}, {
-  dataIndex: 'billingPeriod',
-  label: 'Time Period'
-}, {
-  dataIndex: 'creditsUsed',
-  label: 'Credits Used'
-}, {
-  dataIndex: 'invoicePaymentStatus',
-  label: 'Status'
-}, {
-  dataIndex: '',
-  label: ''
-}];
 function Dashboard(props) {
   //Local State
   const [invoices, setInvoices] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [paginationActive, setPaginationActive] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
   const [activePage, setActivePage] = useState(0);
   const [activeSort, setActiveSort] = useState(null);
@@ -120,7 +103,7 @@ function Dashboard(props) {
   };
   const togglePopup = (index) => {
     setSelectedArr(invoices[index]);
-    setIsOpen(!isOpen);
+    setInvoiceModalOpen(!invoiceModalOpen);
   };
 
   const PopUpData = (tableHead, tableValue) => {
@@ -152,91 +135,23 @@ function Dashboard(props) {
           <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
         </div>
       </header>
-      <div
-        ref={tableRef}
-        className={!paginationActive ? "table-wrapper" : ""}
-        data-lastscrolledpage={lastScrolledPage}
-      >
-        <table className="invoice-data">
-          <thead>
-            <tr styles={{ width: "50px" }}>
-              {tableHeaders.map((header) => {
-                const sortAscCls = activeSort?.key === header.dataIndex && !activeSort?.asc ? 'sort-asc' : '';
-                const sortDescCls = activeSort?.key === header.dataIndex && activeSort?.asc ? 'sort-desc' : '';
-                return <th className={`${sortAscCls} ${sortDescCls}`} onClick={() => sortColumnFun(header.dataIndex)}> {header.label}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {invoices && invoices.length !== 0 && invoices.map((user, i) => {
-              return (
-                <tr key={i} onClick={() => togglePopup(i)} style={{ cursor: 'pointer' }}>
-                  <td>
-                    <span className="text">{user.id ? user.id : "-"}</span>
-                  </td>
-                  <td>{user.invoiceAmount ? user.invoiceAmount : "-"}</td>
-                  <td>{user.billingPeriod ? user.billingPeriod : "NA"}</td>
-                  <td>{user.creditsUsed ? user.creditsUsed : "-"}</td>
-                  <td>
-                    {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
-                  </td>
-                  <td>
-                    <button className="recipt-btn">Recipt</button>
-                  </td>
-                </tr>
-              );
-            }) || 'No rows found!!!'}
-          </tbody>
-        </table>
-        {dataLoading && (
-          <div className="loading-messsage">
-            Loading more data ...
-          </div>
-        )}
-      </div>
-      {isOpen && (
-        <Popup
-          content={
-            <div>
-              <span className="style-text">{selectedArr.id}</span>
-              <hr />
-              {PopUpData("ID", selectedArr.id)}
-              {PopUpData("Amount", selectedArr.invoiceAmount)}
-              {PopUpData("Date", selectedArr.billingPeriod)}
-              {PopUpData("Credits Used", selectedArr.creditsUsed)}
-              <form>
-                <label>
-                  <input
-                    type="radio"
-                    name="optradio"
-                    checked={
-                      selectedArr.invoicePaymentStatus === "Paid" ? true : false
-                    }
-                  />
-                  Paid
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="optradio"
-                    checked={
-                      selectedArr.invoicePaymentStatus === "Unpaid"
-                        ? true
-                        : false
-                    }
-                  />
-                  Not Paid
-                </label>
-              </form>
-              <div className="footer-buttons">
-                <button onClick={() => { setIsOpen(!isOpen) }} className="cancle-button">Cancel</button>
-                <button className="updateButton">Update Details</button>
-              </div>
-            </div>
-          }
-          handleClose={togglePopup}
-        />
-      )}
+      <DataTable
+        tableRef={tableRef}
+        paginationActive={paginationActive}
+        lastScrolledPage={lastScrolledPage}
+        activeSort={activeSort}
+        sortColumnFun={sortColumnFun}
+        invoices={invoices}
+        togglePopup={togglePopup}
+        dataLoading={dataLoading}
+      />
+      <InvoiceModal 
+      isOpen={invoiceModalOpen}
+      setIsOpen={setInvoiceModalOpen}
+      selectedArr={selectedArr}
+      PopUpData={PopUpData}
+      togglePopup={togglePopup}
+      />
       <div className='table-footer'>
         {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
       </div>
