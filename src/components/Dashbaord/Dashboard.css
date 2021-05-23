@@ -36,7 +36,6 @@ th {
 table.invoice-data {
   width: 100%;
   position: relative;
-  table-layout: "fixed";
   border-collapse: collapse;
   word-wrap: break-word;
 }
@@ -47,6 +46,14 @@ td {
 }
 .table-head-width {
   width: 104%;
+}
+.table-wrapper{
+  height: 25vh;
+  overflow: scroll;
+}
+.loading-messsage{
+  text-align: center;
+  margin-top: 10px;
 }
 .text:hover {
   text-decoration: underline rgb(30, 144, 255);

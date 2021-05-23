@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { tableData } from "../../JsonData";
 import Search from "../../commons/Search/Search";
 import ToggleButton from "../../commons/ToggleButton/ToggleButton";
@@ -31,38 +31,77 @@ const tableHeaders = [{
 function Dashboard(props) {
   //Local State
   const [invoices, setInvoices] = useState([]);
-  const [originalData,setOriginalData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
   const [paginationActive, setPaginationActive] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
   const [activePage, setActivePage] = useState(0);
   const [activeSort, setActiveSort] = useState(null);
-  const [filterKey,setFilterKey] = useState("");
+  const [filterKey, setFilterKey] = useState("");
+  const [lastScrolledPage, setLastScrolledPage] = useState(0);
+  const [dataLoading, setDataLoading] = useState(false);
 
-  useEffect(() =>{
+  const pageCount = tableData && tableData.length / pageSize;
+  const tableRef = useRef();
+
+  useEffect(() => {
     setActiveSort(null);
-  },[paginationActive]);
+    setLastScrolledPage(0);
+  }, [paginationActive]);
+
+
+  const fetchNextSetData = (page) => {
+    const startIdx = page * pageSize;
+    const endIdx = pageSize * page + pageSize;
+    const filteredData = tableData && tableData.length !== 0 && tableData.slice(startIdx, endIdx);
+    return filteredData;
+  }
+
   useEffect(() => {
     //pagination handler
-    if(filterKey !== ""){
+    if (filterKey !== "") {
       setFilterKey("");
     }
     if (paginationActive) {
-      const startIdx = activePage * pageSize;
-      const endIdx = pageSize * activePage + pageSize;
-      const filteredData = tableData && tableData.length !== 0 && tableData.slice(startIdx, endIdx);
+      const filteredData = fetchNextSetData(activePage);
       setInvoices(filteredData);
       setOriginalData(filteredData);
+    } else {
+      const initData = tableData.slice(0, pageSize)
+      setInvoices(initData);
+      setOriginalData(initData);
     }
   }, [activePage, paginationActive]);
 
-  //Functions
+  useEffect(() => {
+    const tableEl = tableRef?.current;
+    if (!paginationActive && tableRef) {
+      const scrollHandler = () => {
+        const { lastscrolledpage } = { ...tableRef?.current?.dataset };
+        if (parseInt(lastscrolledpage) < (pageCount - 1) && tableEl.scrollTop + tableEl.clientHeight >= tableEl.scrollHeight && !dataLoading) {
+          const nextPage = parseInt(lastscrolledpage) + 1;
+          setDataLoading(true);
+          setTimeout(() => {
+            setDataLoading(false);
+            const nextSetData = fetchNextSetData(nextPage);
+            const finalData = [...originalData, ...nextSetData];
+            setInvoices(finalData);
+            setOriginalData(finalData);
+          }, 1500);
+          setLastScrolledPage(nextPage);
+        }
+      }
+      tableEl.addEventListener('scroll', scrollHandler);
+      return () => tableEl.removeEventListener('scroll', scrollHandler);
+    }
+  }, [paginationActive, tableRef]);
+
   const sortColumnFun = (key) => {
     if (key !== '') {
-      const sortAsc = activeSort && activeSort.key === key && activeSort.asc; 
+      const sortAsc = activeSort && activeSort.key === key && activeSort.asc;
       const sortedData = sortByKey([...invoices], key);
       const finalData = sortAsc ? sortedData : sortedData.reverse();
-      setActiveSort({key: key,asc: !sortAsc});
+      setActiveSort({ key: key, asc: !sortAsc });
       setInvoices(finalData);
     }
   };
@@ -96,7 +135,6 @@ function Dashboard(props) {
   const goToPage = (pageIdx) => {
     setActivePage(pageIdx);
   }
-  const pageCount = tableData && tableData.length / pageSize;
 
   const handleToggleView = () => {
     setPaginationActive(!paginationActive);
@@ -114,35 +152,48 @@ function Dashboard(props) {
           <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
         </div>
       </header>
-      <table className="invoice-data">
-        <tr styles={{ width: "50px" }}>
-          {tableHeaders.map((header) => {
-            const sortAscCls = activeSort?.key === header.dataIndex && !activeSort?.asc ? 'sort-asc' : '';
-            const sortDescCls = activeSort?.key === header.dataIndex && activeSort?.asc ? 'sort-desc' : '';
-            return <th className={`${sortAscCls} ${sortDescCls}`} onClick={() => sortColumnFun(header.dataIndex)}> {header.label}</th>;
-          })}
-        </tr>
-        {invoices && invoices.length !== 0 && invoices.map((user, i) => {
-          return (
-            <tbody key={i}>
-              <tr onClick={() => togglePopup(i)} style={{ cursor: 'pointer' }}>
-                <td>
-                  <span className="text">{user.id ? user.id : "-"}</span>
-                </td>
-                <td>{user.invoiceAmount ? user.invoiceAmount : "-"}</td>
-                <td>{user.billingPeriod ? user.billingPeriod : "NA"}</td>
-                <td>{user.creditsUsed ? user.creditsUsed : "-"}</td>
-                <td>
-                  {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
-                </td>
-                <td>
-                  <button className="recipt-btn">Recipt</button>
-                </td>
-              </tr>
-            </tbody>
-          );
-        }) || 'No rows found!!!'}
-      </table>
+      <div
+        ref={tableRef}
+        className={!paginationActive ? "table-wrapper" : ""}
+        data-lastscrolledpage={lastScrolledPage}
+      >
+        <table className="invoice-data">
+          <thead>
+            <tr styles={{ width: "50px" }}>
+              {tableHeaders.map((header) => {
+                const sortAscCls = activeSort?.key === header.dataIndex && !activeSort?.asc ? 'sort-asc' : '';
+                const sortDescCls = activeSort?.key === header.dataIndex && activeSort?.asc ? 'sort-desc' : '';
+                return <th className={`${sortAscCls} ${sortDescCls}`} onClick={() => sortColumnFun(header.dataIndex)}> {header.label}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {invoices && invoices.length !== 0 && invoices.map((user, i) => {
+              return (
+                <tr key={i} onClick={() => togglePopup(i)} style={{ cursor: 'pointer' }}>
+                  <td>
+                    <span className="text">{user.id ? user.id : "-"}</span>
+                  </td>
+                  <td>{user.invoiceAmount ? user.invoiceAmount : "-"}</td>
+                  <td>{user.billingPeriod ? user.billingPeriod : "NA"}</td>
+                  <td>{user.creditsUsed ? user.creditsUsed : "-"}</td>
+                  <td>
+                    {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
+                  </td>
+                  <td>
+                    <button className="recipt-btn">Recipt</button>
+                  </td>
+                </tr>
+              );
+            }) || 'No rows found!!!'}
+          </tbody>
+        </table>
+        {dataLoading && (
+          <div className="loading-messsage">
+            Loading more data ...
+          </div>
+        )}
+      </div>
       {isOpen && (
         <Popup
           content={
@@ -178,7 +229,7 @@ function Dashboard(props) {
                 </label>
               </form>
               <div className="footer-buttons">
-                <button onClick={()=>{setIsOpen(!isOpen)}} className="cancle-button">Cancel</button>
+                <button onClick={() => { setIsOpen(!isOpen) }} className="cancle-button">Cancel</button>
                 <button className="updateButton">Update Details</button>
               </div>
             </div>
