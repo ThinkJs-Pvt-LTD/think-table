@@ -1,7 +1,7 @@
 import Popup from "../../commons/PopUp/PopUp";
 
 const InvoiceModal = (props) => {
-    const {isOpen,selectedArr,PopUpData,setIsOpen,togglePopup} = props;
+    const { isOpen, selectedArr, PopUpData, setIsOpen, togglePopup } = props;
     return (
         <div>
             {isOpen && (

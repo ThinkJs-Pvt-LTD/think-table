@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { tableData } from "../../JsonData";
 import Search from "../../commons/Search/Search";
 import ToggleButton from "../../commons/ToggleButton/ToggleButton";
-import Popup from "../../commons/PopUp/PopUp";
 import "./Dashboard.css";
 import { partialStringMatch } from "../../utils/partialStringMatch";
 import Pagination from '../Pagination';
