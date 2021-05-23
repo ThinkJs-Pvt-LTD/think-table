@@ -31,22 +31,28 @@ const tableHeaders = [{
 function Dashboard(props) {
   //Local State
   const [invoices, setInvoices] = useState([]);
+  const [originalData,setOriginalData] = useState([]);
   const [paginationActive, setPaginationActive] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedArr, setSelectedArr] = useState([]);
   const [activePage, setActivePage] = useState(0);
   const [activeSort, setActiveSort] = useState(null);
+  const [filterKey,setFilterKey] = useState("");
 
   useEffect(() =>{
     setActiveSort(null);
   },[paginationActive]);
   useEffect(() => {
     //pagination handler
+    if(filterKey !== ""){
+      setFilterKey("");
+    }
     if (paginationActive) {
       const startIdx = activePage * pageSize;
       const endIdx = pageSize * activePage + pageSize;
       const filteredData = tableData && tableData.length !== 0 && tableData.slice(startIdx, endIdx);
       setInvoices(filteredData);
+      setOriginalData(filteredData);
     }
   }, [activePage, paginationActive]);
 
@@ -62,11 +68,12 @@ function Dashboard(props) {
   };
 
   const handleChange = (newVal) => {
+    setFilterKey(newVal);
     if (newVal === '') {
-      setInvoices(tableData);
+      setInvoices(originalData);
       return;
     }
-    const filteredData = tableData?.filter((_item) => {
+    const filteredData = originalData?.filter((_item) => {
       const { id, invoiceAmount, billingPeriod, creditsUsed, creditsLimit, invoicePaymentStatus } = _item;
       return partialStringMatch(id, newVal) || partialStringMatch(invoiceAmount, newVal) || partialStringMatch(billingPeriod, newVal) || partialStringMatch(creditsUsed, newVal) || partialStringMatch(creditsLimit, newVal) || partialStringMatch(invoicePaymentStatus, newVal)
     });
@@ -103,7 +110,7 @@ function Dashboard(props) {
       <header className="site-header">
         <h3 className="style-text">Invoices</h3>
         <div className="nav-search">
-          <Search onChange={handleChange} />
+          <Search filterKey={filterKey} onChange={handleChange} />
           <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
         </div>
       </header>

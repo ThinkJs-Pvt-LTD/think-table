@@ -1,12 +1,6 @@
-import React, { useState } from "react";
 import "./Search.css"
 
-function SearchBar({onChange}) {
-  const [keyword, setKeyword] = useState("");
-  const handleInputChange = (key) => {
-    setKeyword(key);
-    onChange(key);
-  }
+function SearchBar({filterKey,onChange}) {
   return (
     <div class="wrap">
       <div class="search">
@@ -15,8 +9,8 @@ function SearchBar({onChange}) {
           class="searchTerm"
           id="input_text"
           placeholder="Search"
-          onChange={(e) => handleInputChange(e.target.value)}
-          value={keyword}
+          onChange={(e) => onChange(e.target.value)}
+          value={filterKey}
         />
         <button type="submit" class="searchButton">
           <i class="fa fa-search"></i>
