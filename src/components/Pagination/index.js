@@ -8,14 +8,14 @@ function Pagination(props) {
   const pages = [];
   for (let i = 0; i < pageCount; i++) {
     const active = i === activePage;
-    pages.push(<span onClick={() => { goToPage(i) }} className={active ? 'active' : ''}>{i + 1}</span>);
+    pages.push(<a onClick={() => { goToPage(i) }} className={active ? 'active' : ''}>{i + 1}</a>);
   }
   return (
     <div class="pagination">
       {pages}
-      <span>
-        <span>Go to page</span>
-        <span>
+      <span className="go-to-wrapper">
+        <span className="go-to-label">Go to page</span>
+        <span  className="go-to-input">
           <input
             onChange={(e) => {
               const val = e.target.value;

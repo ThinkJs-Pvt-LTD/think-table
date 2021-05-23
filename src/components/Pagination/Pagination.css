@@ -1,21 +1,44 @@
 .pagination {
-  display: inline-block;
+  padding: 1rem 0 2rem 0;
 }
 
-.pagination span {
+.pagination a {
   color: black;
   float: left;
   padding: 8px 16px;
   text-decoration: none;
 }
 
-.pagination span.active {
+.pagination a.active {
   background-color: #0383ff;
   color: white;
 }
-.pagination span:hover:not(.active) {
+.pagination a:hover:not(.active) {
   cursor: pointer;
   background-color: #ddd;
+}
+
+.pagination .go-to-wrapper{
+  float: right;
+}
+
+.pagination .go-to-label,.pagination .go-to-input{
+  margin-right: 1rem;
+}
+
+.pagination .go-to-input>input{
+  height: 25px;
+  width: 25px;
+}
+
+.pagination .go-to-input>input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination .go-to-input>input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .pagination .go-to-button{
