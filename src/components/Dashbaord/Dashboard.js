@@ -64,13 +64,13 @@ function Dashboard(props) {
           const nextPage = parseInt(lastscrolledpage) + 1;
           setDataLoading(true);
           setTimeout(() => {
-            setDataLoading(false);
             const nextSetData = fetchNextSetData(nextPage);
             const finalData = [...originalData, ...nextSetData];
             setInvoices(finalData);
             setOriginalData(finalData);
+            setLastScrolledPage(nextPage);
+            setDataLoading(false);
           }, 1500);
-          setLastScrolledPage(nextPage);
         }
       }
       tableEl.addEventListener('scroll', scrollHandler);
