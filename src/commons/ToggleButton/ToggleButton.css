@@ -1,11 +1,7 @@
 .toggle-button {
   border: 2px solid rgb(219, 234, 250);
-  width: 49%;
-  height: 2em;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-radius: 3rem;
+  padding: 2px;
   box-shadow: 5px 2px 8px rgb(219, 234, 250);
   margin-left: 10px;
 }
@@ -15,7 +11,8 @@
   top: 10%;
   /* right: 12px; */
   /* width: 69%; */
-  height: 2em;
+  /* height: 2em; */
+  padding: 5px;
   border-radius: 50px;
   cursor: pointer;
   outline: none;

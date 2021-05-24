@@ -24,7 +24,6 @@ const DataTable = (props) => {
     return (
         <div
             ref={tableRef}
-            className={!paginationActive ? "table-wrapper" : ""}
             data-lastscrolledpage={lastScrolledPage}
         >
             <table className="invoice-data">

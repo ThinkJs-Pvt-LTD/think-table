@@ -18,12 +18,12 @@
 }
 .nav-search {
   display: flex;
-  width: 35%;
+  width: 38%;
   align-items: center;
 }
 @media only screen and (min-width: 1200px) and (max-width: 1300px){
   .nav-search {
-    width: 40%;
+    width: 45%;
   }
 }
 @media only screen and (min-width: 1000px) and (max-width: 1200px) {
