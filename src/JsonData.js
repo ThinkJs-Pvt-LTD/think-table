@@ -41,7 +41,7 @@ export  const tableData = [
     },
     {
       id: "MS00006",
-      invoiceAmount: "5000",
+      invoiceAmount: "500",
       billingPeriod: "2 Jan 2020 - 1 Feb 2020",
       creditsUsed: "661",
       creditsLimit: "22029",
@@ -69,7 +69,7 @@ export  const tableData = [
       billingPeriod: "2 Jan 2020 - 1 Feb 2020",
       creditsUsed: "859",
       creditsLimit: "30025",
-      invoicePaymentStatus: "Paid",
+      invoicePaymentStatus: "Unpaid",
     },
     {
       id: "MS00010",
@@ -77,7 +77,7 @@ export  const tableData = [
       billingPeriod: "2 Jan 2020 - 1 Feb 2020",
       creditsUsed: "9330",
       creditsLimit: "39231",
-      invoicePaymentStatus: "Unpaid",
+      invoicePaymentStatus: "Paid",
     },
     {
       id: "MS00011",
@@ -93,7 +93,7 @@ export  const tableData = [
       billingPeriod: "2 Jan 2020 - 1 Feb 2020",
       creditsUsed: "4392",
       creditsLimit: "21684",
-      invoicePaymentStatus: "Paid",
+      invoicePaymentStatus: "Unpaid",
     },
     {
       id: "MS00013",
@@ -101,7 +101,7 @@ export  const tableData = [
       billingPeriod: "2 Jan 2020 - 1 Feb 2020",
       creditsUsed: "8297",
       creditsLimit: "34101",
-      invoicePaymentStatus: "Unpaid",
+      invoicePaymentStatus: "Paid",
     },
     {
       id: "MS00014",

@@ -73,6 +73,7 @@ td {
   padding: 1rem;
 }
 #progressbar {
+  float: left;
   display: inline-block;
   background-color: #D3DDE9;
   border-radius: 13px;
