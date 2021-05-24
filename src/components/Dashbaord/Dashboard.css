@@ -5,7 +5,6 @@
   width: 80%;
   padding: 20px;
   /* justify-content: center; */
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .heading{
   text-align: center;
@@ -64,6 +63,24 @@ td {
 .table-wrapper{
   height: 25vh;
   overflow: scroll;
+}
+.table-container{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 1rem;
+}
+#progressbar {
+  display: inline-block;
+  background-color: #D3DDE9;
+  border-radius: 13px;
+  width: 5rem;
+  margin-right: 15px;
+}
+
+#progressbar>span {
+  display:block;
+  background-color: #0383FF;
+  height: 5px;
+  border-radius: 10px;
 }
 .loading-messsage{
   text-align: center;
@@ -129,6 +146,11 @@ td {
   border: none;
   box-shadow: 0 0 2px 0 grey;
   padding: 0.25rem 0.5rem;
+}
+
+.recipt-btn .recipt-icon{
+  font-size: 12px;
+  margin-right: 5px;
 }
 
 .sort-asc{

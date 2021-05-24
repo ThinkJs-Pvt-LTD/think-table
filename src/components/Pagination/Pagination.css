@@ -48,3 +48,9 @@ input::-webkit-inner-spin-button {
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+
+.pagination .go-to-icon{
+  font-size: 12px;
+  margin-left: 5px;
+  width: 2px;
+}

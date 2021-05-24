@@ -126,32 +126,34 @@ function Dashboard(props) {
       <div className='heading'>
         <h2>Think Table</h2>
       </div>
-      <header className="site-header">
-        <h3 className="style-text">Invoices</h3>
-        <div className="nav-search">
-          <Search filterKey={filterKey} onChange={handleChange} />
-          <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
+      <div className="table-container">
+        <header className="site-header">
+          <h3 className="style-text">Invoices</h3>
+          <div className="nav-search">
+            <Search filterKey={filterKey} onChange={handleChange} />
+            <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
+          </div>
+        </header>
+        <DataTable
+          tableRef={tableRef}
+          paginationActive={paginationActive}
+          lastScrolledPage={lastScrolledPage}
+          activeSort={activeSort}
+          sortColumnFun={sortColumnFun}
+          invoices={invoices}
+          togglePopup={togglePopup}
+          dataLoading={dataLoading}
+        />
+        <InvoiceModal
+          isOpen={invoiceModalOpen}
+          setIsOpen={setInvoiceModalOpen}
+          selectedArr={selectedArr}
+          PopUpData={PopUpData}
+          togglePopup={togglePopup}
+        />
+        <div className='table-footer'>
+          {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
         </div>
-      </header>
-      <DataTable
-        tableRef={tableRef}
-        paginationActive={paginationActive}
-        lastScrolledPage={lastScrolledPage}
-        activeSort={activeSort}
-        sortColumnFun={sortColumnFun}
-        invoices={invoices}
-        togglePopup={togglePopup}
-        dataLoading={dataLoading}
-      />
-      <InvoiceModal
-        isOpen={invoiceModalOpen}
-        setIsOpen={setInvoiceModalOpen}
-        selectedArr={selectedArr}
-        PopUpData={PopUpData}
-        togglePopup={togglePopup}
-      />
-      <div className='table-footer'>
-        {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
       </div>
     </div>
   );
