@@ -28,7 +28,10 @@ function Pagination(props) {
             max={pageCount}
           />
         </span>
-        <button onClick={() => { checkRange(1, pageCount, goToVal) && goToPage(goToVal - 1) }} className="go-to-button">Go</button>
+        <button onClick={() => { checkRange(1, pageCount, goToVal) && goToPage(goToVal - 1) }} className="go-to-button">
+          <span>Go</span>
+          <span className="go-to-icon"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </button>
       </span>
     </div>
   );

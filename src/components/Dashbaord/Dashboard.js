@@ -49,34 +49,33 @@ function Dashboard(props) {
       setInvoices(filteredData);
       setOriginalData(filteredData);
     } else {
-      const initData = tableData.slice(0, pageSize)
-      setInvoices(initData);
-      setOriginalData(initData);
+      setInvoices(tableData);
+      setOriginalData(tableData);
     }
   }, [activePage, paginationActive]);
 
-  useEffect(() => {
-    const tableEl = tableRef?.current;
-    if (!paginationActive && tableRef) {
-      const scrollHandler = () => {
-        const { lastscrolledpage } = { ...tableRef?.current?.dataset };
-        if (parseInt(lastscrolledpage) < (pageCount - 1) && tableEl.scrollTop + tableEl.clientHeight >= tableEl.scrollHeight && !dataLoading) {
-          const nextPage = parseInt(lastscrolledpage) + 1;
-          setDataLoading(true);
-          setTimeout(() => {
-            const nextSetData = fetchNextSetData(nextPage);
-            const finalData = [...originalData, ...nextSetData];
-            setInvoices(finalData);
-            setOriginalData(finalData);
-            setLastScrolledPage(nextPage);
-            setDataLoading(false);
-          }, 500);
-        }
-      }
-      tableEl.addEventListener('scroll', scrollHandler);
-      return () => tableEl.removeEventListener('scroll', scrollHandler);
-    }
-  }, [paginationActive, tableRef]);
+  // useEffect(() => {
+  //   const tableEl = tableRef?.current;
+  //   if (!paginationActive && tableRef) {
+  //     const scrollHandler = () => {
+  //       const { lastscrolledpage } = { ...tableRef?.current?.dataset };
+  //       if (parseInt(lastscrolledpage) < (pageCount - 1) && tableEl.scrollTop + tableEl.clientHeight >= tableEl.scrollHeight && !dataLoading) {
+  //         const nextPage = parseInt(lastscrolledpage) + 1;
+  //         setDataLoading(true);
+  //         setTimeout(() => {
+  //           const nextSetData = fetchNextSetData(nextPage);
+  //           const finalData = [...originalData, ...nextSetData];
+  //           setInvoices(finalData);
+  //           setOriginalData(finalData);
+  //           setLastScrolledPage(nextPage);
+  //           setDataLoading(false);
+  //         }, 500);
+  //       }
+  //     }
+  //     tableEl.addEventListener('scroll', scrollHandler);
+  //     return () => tableEl.removeEventListener('scroll', scrollHandler);
+  //   }
+  // }, [paginationActive, tableRef]);
 
   const sortColumnFun = (key) => {
     if (key !== '') {
@@ -127,35 +126,34 @@ function Dashboard(props) {
       <div className='heading'>
         <h2>Think Table</h2>
       </div>
-      <header className="site-header">
-        <h3 className="style-text">Invoices</h3>
-        <div className="nav-search">
-          <Search filterKey={filterKey} onChange={handleChange} />
-          <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
+      <div className="table-container">
+        <header className="site-header">
+          <h3 className="style-text">Invoices</h3>
+          <div className="nav-search">
+            <Search filterKey={filterKey} onChange={handleChange} />
+            <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
+          </div>
+        </header>
+        <DataTable
+          tableRef={tableRef}
+          paginationActive={paginationActive}
+          lastScrolledPage={lastScrolledPage}
+          activeSort={activeSort}
+          sortColumnFun={sortColumnFun}
+          invoices={invoices}
+          togglePopup={togglePopup}
+          dataLoading={dataLoading}
+        />
+        <InvoiceModal
+          isOpen={invoiceModalOpen}
+          setIsOpen={setInvoiceModalOpen}
+          selectedArr={selectedArr}
+          PopUpData={PopUpData}
+          togglePopup={togglePopup}
+        />
+        <div className='table-footer'>
+          {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
         </div>
-      </header>
-      {!paginationActive && (
-        <span className="scroll-msg"><i>Scroll the table to view more data.</i></span>
-      )}
-      <DataTable
-        tableRef={tableRef}
-        paginationActive={paginationActive}
-        lastScrolledPage={lastScrolledPage}
-        activeSort={activeSort}
-        sortColumnFun={sortColumnFun}
-        invoices={invoices}
-        togglePopup={togglePopup}
-        dataLoading={dataLoading}
-      />
-      <InvoiceModal
-        isOpen={invoiceModalOpen}
-        setIsOpen={setInvoiceModalOpen}
-        selectedArr={selectedArr}
-        PopUpData={PopUpData}
-        togglePopup={togglePopup}
-      />
-      <div className='table-footer'>
-        {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}
       </div>
     </div>
   );

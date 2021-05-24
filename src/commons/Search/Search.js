@@ -12,7 +12,7 @@ function SearchBar({filterKey,onChange}) {
           onChange={(e) => onChange(e.target.value)}
           value={filterKey}
         />
-        <button type="submit" class="searchButton">
+        <button class="searchButton">
           <i class="fa fa-search"></i>
         </button>
       </div>

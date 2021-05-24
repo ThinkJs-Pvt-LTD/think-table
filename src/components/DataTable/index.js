@@ -24,7 +24,6 @@ const DataTable = (props) => {
     return (
         <div
             ref={tableRef}
-            className={!paginationActive ? "table-wrapper" : ""}
             data-lastscrolledpage={lastScrolledPage}
         >
             <table className="invoice-data">
@@ -39,6 +38,7 @@ const DataTable = (props) => {
                 </thead>
                 <tbody>
                     {invoices && invoices.length !== 0 && invoices.map((user, i) => {
+                        const progress = parseInt(user.creditsUsed)/parseInt(user.creditsLimit) * 100;
                         return (
                             <tr key={i} onClick={() => togglePopup(i)} style={{ cursor: 'pointer' }}>
                                 <td>
@@ -46,12 +46,22 @@ const DataTable = (props) => {
                                 </td>
                                 <td>{user.invoiceAmount ? user.invoiceAmount : "-"}</td>
                                 <td>{user.billingPeriod ? user.billingPeriod : "NA"}</td>
-                                <td>{user.creditsUsed ? user.creditsUsed : "-"}</td>
                                 <td>
-                                    {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
+                                    <span id="progressbar">
+                                        <span style={{width: `${progress}%`}}></span>
+                                    </span>
+                                    <span style={{ verticalAlign: 'middle' }}>
+                                        {user.creditsUsed ? `${user.creditsUsed}/${user.creditsLimit}` : "-"}
+                                    </span>
                                 </td>
                                 <td>
-                                    <button className="recipt-btn">Recipt</button>
+                                    <span className="pay-status">{user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}</span>
+                                </td>
+                                <td>
+                                    <button className="recipt-btn">
+                                        <span className="recipt-icon"><i class="fa fa-download" aria-hidden="true"></i></span>
+                                        <span>Receipt</span>
+                                    </button>
                                 </td>
                             </tr>
                         );
