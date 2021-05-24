@@ -7,6 +7,7 @@
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   box-shadow: 5px 2px 8px rgb(219, 234, 250);
+  margin-left: 10px;
 }
 .button-width {
   /* padding: 10px; */
@@ -21,13 +22,13 @@
   border: none;
 }
 .nav-text {
-  font-size: 22px;
+  font-size: 1.20vw;
   font-weight: 800;
   position: relative;
   /* bottom: 9px; */
 }
 .nav-text-infinite {
   position: relative;
-  font-size: 22px;
+  font-size: 1.20vw;
   font-weight: 800;
 }
