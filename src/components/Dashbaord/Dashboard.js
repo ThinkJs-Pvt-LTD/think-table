@@ -70,7 +70,7 @@ function Dashboard(props) {
             setOriginalData(finalData);
             setLastScrolledPage(nextPage);
             setDataLoading(false);
-          }, 1500);
+          }, 500);
         }
       }
       tableEl.addEventListener('scroll', scrollHandler);
@@ -134,6 +134,9 @@ function Dashboard(props) {
           <ToggleButton paginationActive={paginationActive} toggleView={handleToggleView} />
         </div>
       </header>
+      {!paginationActive && (
+        <span className="scroll-msg"><i>Scroll the table to view more data.</i></span>
+      )}
       <DataTable
         tableRef={tableRef}
         paginationActive={paginationActive}
@@ -144,12 +147,12 @@ function Dashboard(props) {
         togglePopup={togglePopup}
         dataLoading={dataLoading}
       />
-      <InvoiceModal 
-      isOpen={invoiceModalOpen}
-      setIsOpen={setInvoiceModalOpen}
-      selectedArr={selectedArr}
-      PopUpData={PopUpData}
-      togglePopup={togglePopup}
+      <InvoiceModal
+        isOpen={invoiceModalOpen}
+        setIsOpen={setInvoiceModalOpen}
+        selectedArr={selectedArr}
+        PopUpData={PopUpData}
+        togglePopup={togglePopup}
       />
       <div className='table-footer'>
         {paginationActive ? <Pagination activePage={activePage} goToPage={goToPage} pageCount={pageCount} /> : ''}

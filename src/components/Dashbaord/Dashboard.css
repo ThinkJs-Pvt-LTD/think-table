@@ -18,9 +18,23 @@
 }
 .nav-search {
   display: flex;
-  width: 40%;
-  justify-content: space-between;
+  width: 35%;
   align-items: center;
+}
+@media only screen and (min-width: 1200px) and (max-width: 1300px){
+  .nav-search {
+    width: 40%;
+  }
+}
+@media only screen and (min-width: 1000px) and (max-width: 1200px) {
+  .nav-search {
+    width: 45%;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .nav-search {
+    width: 50%;
+  }
 }
 th {
   /* text-align: left; */
@@ -123,4 +137,9 @@ td {
 
 .sort-desc{
   border-top: 2px solid pink;
+}
+
+.scroll-msg{
+  color: red;
+  font-size: 0.65rem;
 }
