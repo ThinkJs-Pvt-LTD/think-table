@@ -59,7 +59,8 @@ table.invoice-data {
 th,
 td {
   border-bottom: 1px solid #ddd;
-  text-align: center;
+  text-align: left;
+  padding: 0.75rem;
 }
 .table-head-width {
   width: 104%;
@@ -73,7 +74,6 @@ td {
   padding: 1rem;
 }
 #progressbar {
-  float: left;
   display: inline-block;
   background-color: #D3DDE9;
   border-radius: 13px;
