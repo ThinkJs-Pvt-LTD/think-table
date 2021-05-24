@@ -55,7 +55,7 @@ const DataTable = (props) => {
                                     </span>
                                 </td>
                                 <td>
-                                    {user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}
+                                    <span className="pay-status">{user.invoicePaymentStatus ? user.invoicePaymentStatus : "-"}</span>
                                 </td>
                                 <td>
                                     <button className="recipt-btn">

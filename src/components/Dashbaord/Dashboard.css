@@ -35,6 +35,9 @@
     width: 50%;
   }
 }
+table{
+  font-family: Inter;
+}
 th {
   /* text-align: left; */
   background-color: rgb(227, 239, 252);
@@ -82,6 +85,11 @@ td {
   height: 5px;
   border-radius: 10px;
 }
+.pay-status{
+  background: #ECF2F9;
+  border-radius: 15px;
+  padding: 3px 10px;
+}
 .loading-messsage{
   text-align: center;
   margin-top: 10px;
@@ -93,15 +101,15 @@ td {
 .pop-up-block {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid black; */
-  height: 100px;
   justify-content: space-around;
+  margin: 1.25rem 0 ;
 }
 .style-text {
   font-weight: 540;
   font-size: 1.1rem;
-  font-family: Tahoma;
+  font-family: 'Inter', sans-serif;
   justify-content: space-around;
+  margin-bottom: 8px;
 }
 .style-text-input {
   padding: 7px;
@@ -110,30 +118,31 @@ td {
   font-size: 1.1rem;
   font-family: Tahoma;
   position: relative;
-  background-color: rgb(227, 239, 252);
+  background-color: #ECF2F9;
 }
 .footer-buttons {
-  position: relative;
-  left: 61.1%;
-  width: 40%;
-  display: flex;
-  justify-content: space-around;
+  float: right;
 }
 .updateButton {
-  background-color: rgb(2, 166, 255);
-  color: white;
-  font-size: 22px;
-  font-weight: 800;
-  position: relative;
+  background: #0381FA;
   border: none;
+  color: #fff;
+  padding: 7px 8px 7px 8px;
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 18px;
   cursor: pointer;
 }
 .cancle-button {
-  padding: 7px;
-  background-color: white;
-  font-size: 22px;
-  font-weight: 800;
-  border: 2px solid rgb(219, 234, 250);
+  background: #fff;
+  border: none;
+  color: #111;
+  padding: 7px 8px 7px 8px;
+  background: #FDFEFF;
+  border: 1px solid #D3DDE9;
+  box-shadow: 0px 1px 3px rgba(0, 52, 102, 0.06), 0px 1px 2px rgba(0, 52, 102, 0.12);
+  font-weight: 600;
+  font-size: 18px;
   cursor: pointer;
 }
 
